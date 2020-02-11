@@ -66,12 +66,12 @@ IPV6_FILE=${BASE}/ipv6-$(date +%Y%m%d).txt
 
 function update_ip()
 {
-	curl -sSLo ${BASE}/afrinic.txt https://mirrors.xieke.org/ip/afrinic-latest.txt
-	curl -sSLo ${BASE}/apnic.txt https://mirrors.xieke.org/ip/apnic-latest.txt
-	curl -sSLo ${BASE}/arin.txt https://mirrors.xieke.org/ip/arin-latest.txt
-	curl -sSLo ${BASE}/lacnic.txt https://mirrors.xieke.org/ip/lacnic-latest.txt
-	curl -sSLo ${BASE}/ripe.txt https://mirrors.xieke.org/ip/ripe-latest.txt
-	curl -sSLo ${BASE}/asn.txt https://mirrors.xieke.org/ip/asn-latest.txt
+	curl -sSLo ${BASE}/afrinic.txt https://mirrors.xieke.org/ip/afrinic-latest.txt --insecure
+	curl -sSLo ${BASE}/apnic.txt https://mirrors.xieke.org/ip/apnic-latest.txt --insecure
+	curl -sSLo ${BASE}/arin.txt https://mirrors.xieke.org/ip/arin-latest.txt --insecure
+	curl -sSLo ${BASE}/lacnic.txt https://mirrors.xieke.org/ip/lacnic-latest.txt --insecure
+	curl -sSLo ${BASE}/ripe.txt https://mirrors.xieke.org/ip/ripe-latest.txt --insecure
+	curl -sSLo ${BASE}/asn.txt https://mirrors.xieke.org/ip/asn-latest.txt --insecure
 }
 
 function get_global_ip()
@@ -81,7 +81,7 @@ function get_global_ip()
 	cat ${BASE}/afrinic.txt | grep -v summary | grep '^afrinic|' | awk -F '|' '{print $1"/"$2"/"$3"/"$4"/"$5"/"$6}' >> ${BASE_IP_FILE}
 	cat ${BASE}/arin.txt | grep -v summary | grep '^arin|' | awk -F '|' '{print $1"/"$2"/"$3"/"$4"/"$5"/"$6}' >> ${BASE_IP_FILE}
 	cat ${BASE}/lacnic.txt | grep -v summary | grep '^lacnic|' | awk -F '|' '{print $1"/"$2"/"$3"/"$4"/"$5"/"$6}' >> ${BASE_IP_FILE}
-	cat ${BASE}/ripencc.txt | grep -v summary | grep '^ripencc|' | awk -F '|' '{print $1"/"$2"/"$3"/"$4"/"$5"/"$6}' >> ${BASE_IP_FILE}
+	cat ${BASE}/ripe.txt | grep -v summary | grep '^ripencc|' | awk -F '|' '{print $1"/"$2"/"$3"/"$4"/"$5"/"$6}' >> ${BASE_IP_FILE}
 
 	echo "=> Generate ASN"
 	cat ${BASE_IP_FILE} | grep 'asn' > ${ASN_FILE}
@@ -121,7 +121,7 @@ function process_ip_address_segment()
 
 function get_all_asn()
 {
-	curl -sSLo ${ASN_FILE} ${ASN_URL}
+	curl -sSLo ${ASN_FILE} ${ASN_URL} --insecure
 }
 
 function get_all_country()
